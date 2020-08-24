@@ -16,10 +16,14 @@ public abstract class Element {
     private int id = 0;
     private List<Port> ports = new ArrayList<>();
     private Label label = new Label("", 0.0, 0.0);
+    private int inputAmount = 0;
+    private boolean isAmountDynamic = false;
     private Form form = Form.NON;
     private double x = 0.0;
     private double y = 0.0;
 
-    public abstract String template();
+    public abstract Element construct(); // Метод для сборки данных по элементу. ToDo скорее всего на вход будет приниматься ветка дерева
+
+    public abstract Element template(); // Метод для создания темплейта по элементу. Работает с дефолтными значениями
 
 }
