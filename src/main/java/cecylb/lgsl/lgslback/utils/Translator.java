@@ -6,14 +6,26 @@ import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.*;
+import io.github.tdf4j.core.module.LexerAbstractModule;
+import io.github.tdf4j.generator.Generator;
+import io.github.tdf4j.generator.Options;
+import io.github.tdf4j.generator.impl.ParserGenerator;
+import io.github.tdf4j.lexer.Lexer;
+import io.github.tdf4j.lexer.LexerImpl;
+import io.github.tdf4j.parser.Parser;
+import io.github.tdf4j.parser.ParserMetaInformation;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
 
 public final class Translator {
 
     public static byte[] translate(String input) {
         try(ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-            //ToDo Обращение к tdf4j генератору, выборка значений, генерация компонентов, рендер пдф
+
+
             PdfWriter writer = new PdfWriter(outputStream);
             PdfDocument pdfDocument = new PdfDocument(writer);
             PdfPage page = pdfDocument.addNewPage();
@@ -32,5 +44,15 @@ public final class Translator {
         } catch (Exception e) {
             return e.toString().getBytes();
         }
+    }
+
+
+    private static String read(final InputStream inputStream) throws IOException {
+        final StringWriter writer = new StringWriter();
+        int bt;
+        while((bt = inputStream.read()) != -1) {
+            writer.write(bt);
+        }
+        return writer.toString();
     }
 }
