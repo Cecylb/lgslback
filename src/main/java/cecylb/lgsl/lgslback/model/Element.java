@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public abstract class Element{
+public abstract class Element {
 
     private int id = 0;
     private List<Port> ports = new ArrayList<>();

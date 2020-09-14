@@ -1,8 +1,9 @@
 package cecylb.lgsl.lgslback.web;
 
+import cecylb.lgsl.lgslback.config.LgslBackConfig;
 import cecylb.lgsl.lgslback.utils.GeneratorService;
 import cecylb.lgsl.lgslback.utils.Translator;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -12,15 +13,14 @@ import java.util.Collection;
 @RequestMapping("/api")
 public class EditorController {
 
-    @Autowired
-    private GeneratorService generator;
+    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(LgslBackConfig.class);
 
     @GetMapping("/editor")
-    Collection<String> getReaction() { return generator.getElementsString();}
+    Collection<String> getElements() { return context.getBean("generator", GeneratorService.class).getElementsString();}
 
     @GetMapping("/editor/{model}")
-    String getModel (@PathVariable String model) { return generator.generate(model); }
+    String getTemplate(@PathVariable String model) { return context.getBean("generator", GeneratorService.class).generate(model); }
 
     @PostMapping("/editor/submit")
-    public @ResponseBody byte[] process(@Valid @RequestBody String input) { return Translator.translate(input); }
+    public @ResponseBody byte[] processSubmit(@Valid @RequestBody String input) { return Translator.translate(input); }
 }
