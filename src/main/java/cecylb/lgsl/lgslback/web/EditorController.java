@@ -23,4 +23,7 @@ public class EditorController {
 
     @PostMapping("/editor/submit")
     public @ResponseBody byte[] processSubmit(@Valid @RequestBody String input) { return Translator.translate(input); }
+
+    @PostMapping("/editor/grammar")
+    String getGrammar() { return "Здесь будет файл с грамматикой";}
 }
